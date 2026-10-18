@@ -13,9 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Fetch upstream CSV files
+      - name: Fetch China CSV files only
         run: |
-          for f in CN TW HK JP SG mobile telecom unicom; do
+          for f in CN telecom unicom mobile; do
             curl -fsSL -o ${f}.csv "https://raw.githubusercontent.com/spiritLHLS/speedtest.cn-CN-ID/main/${f}.csv" || echo "skip ${f}"
           done
       - name: Update README timestamp
@@ -26,5 +26,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
-          git diff --cached --quiet || git commit -m "Sync upstream speedtest nodes $(date +%Y/%m/%d)"
+          git diff --cached --quiet || git commit -m "Sync upstream CN speedtest nodes $(date +%Y/%m/%d)"
           git push
